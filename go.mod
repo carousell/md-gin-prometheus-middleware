@@ -1,6 +1,6 @@
-module github.com/carousell/gin-prometheus-middleware
+module github.com/carousell/md-gin-prometheus-middleware
 
-go 1.19
+go 1.23.2
 
 require (
 	github.com/gin-gonic/gin v1.10.0
