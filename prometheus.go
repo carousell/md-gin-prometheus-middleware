@@ -1,6 +1,7 @@
 package gpmiddleware
 
 import (
+	"fmt"
 	"strconv"
 	"time"
 
@@ -93,7 +94,16 @@ func (p *Prometheus) HandlerFunc() gin.HandlerFunc {
 		c.Next()
 
 		status := strconv.Itoa(c.Writer.Status())
-		elapsed := float64(time.Since(start)) / float64(time.Second)
+
+		end := time.Now()
+		elapsedTS := end.Sub(start)
+		elapsed := float64(elapsedTS) / float64(time.Second)
+
+		fmt.Printf(
+			"Prometheus capture start-ts::%s end-ts::%s elapsed::%f",
+			start.Format("2006-01-02 15:04:05.000000"),
+			end.Format("2006-01-02 15:04:05.000000"),
+			elapsed)
 
 		path := c.FullPath()
 		if path == "" { // path empty -> no route found
