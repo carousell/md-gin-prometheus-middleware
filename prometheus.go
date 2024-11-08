@@ -100,7 +100,7 @@ func (p *Prometheus) HandlerFunc() gin.HandlerFunc {
 		elapsed := float64(elapsedTS) / float64(time.Second)
 
 		fmt.Printf(
-			"Prometheus capture start-ts::%s end-ts::%s elapsed::%f",
+			"Prometheus capture start-ts::%s end-ts::%s elapsed::%f\n",
 			start.Format("2006-01-02 15:04:05.000000"),
 			end.Format("2006-01-02 15:04:05.000000"),
 			elapsed)
