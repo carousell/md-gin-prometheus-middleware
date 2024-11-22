@@ -69,16 +69,32 @@ func (p *Prometheus) runServer() {
 }
 
 func (p *Prometheus) registerMetrics(subsystem string) {
+
+	// Classic Histogram (Manually defined Buckets)
 	p.reqDur = prometheus.NewHistogramVec(
 		prometheus.HistogramOpts{
 			Subsystem: subsystem,
 			Name:      "request_duration_seconds",
 			Help:      "Histogram request latencies",
-			Buckets:   []float64{.005, .01, .02, 0.04, .06, 0.08, .1, 0.15, .25, 0.4, .6, .8, 1, 1.5, 2, 3, 5},
-		},
+			Buckets: []float64{ // Implement 10x intervals to capture exponential growth of latencies
+				.0001, // 100us
+				.0002, // 200us
+				.0005, // 500us
+				.001,  // 1ms
+				.002,  // 2ms
+				.005,  // 5ms
+				.01,   // 10ms
+				.02,   // 20ms
+				.05,   // 50ms
+				.1,    // 100ms
+				.2,    // 200ms
+				.5,    // 500ms
+				1,     // 1s
+				2,     // 2s
+				5,     // 5s
+			}},
 		[]string{"code", "path"},
 	)
-
 	prometheus.Register(p.reqDur)
 }
 
